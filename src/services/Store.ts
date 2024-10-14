@@ -11,8 +11,8 @@ export default class StoreService{
         return await StoreRepositories.create(payload) 
     }
 
-    static async getAll(){
-        const stores = await StoreRepositories.get();
+    static async getAll(): Promise<IStore[]>{
+        const stores = await StoreRepositories.get() as IStore[];
 
         if(!stores.length)
             throw new AppError('Nenhum registro encontrado', 404);
@@ -20,15 +20,17 @@ export default class StoreService{
         return stores;
     }
 
-    static async getById(id: Types.ObjectId){
-        const store = await StoreRepositories.getById(id);
+    static async getById(id: Types.ObjectId): Promise<IStore>{
+        const store = await StoreRepositories.getById(id) as IStore;
+        
         if(!store) 
             throw new AppError('Loja não encontrada', 404);
+        
         return store
     }
 
-    static async getByIdDeleted(id: Types.ObjectId){
-        const store = await StoreRepositories.getByIdDeleted(id);
+    static async getByIdDeleted(id: Types.ObjectId): Promise<IStore>{
+        const store = await StoreRepositories.getByIdDeleted(id) as IStore;
         if(!store)
             throw new AppError('Loja não encontrada', 404);
 

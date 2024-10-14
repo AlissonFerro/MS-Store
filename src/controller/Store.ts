@@ -17,7 +17,7 @@ export default class StoreController{
         const { name, store, address } = req.body;
         const now = Date.now();
         const s = await StoreService.create({
-            name, store, address, creadtedAt: now, updatedAt: now, deletedAt: null
+            name, store, address, createdAt: now, updatedAt: now, deletedAt: null
         }); 
         res.status(201).send({ store: s });
     }
@@ -28,7 +28,7 @@ export default class StoreController{
         const store1 = await StoreService.getById(new Types.ObjectId(req.params.id)); 
 
         await StoreService.modify(new Types.ObjectId(req.params.id), {
-            name, store, address, creadtedAt: store1.createdAt, updatedAt: Date.now(), deletedAt: null 
+            name, store, address, createdAt: store1.createdAt, updatedAt: Date.now(), deletedAt: null 
         });
 
         res.status(200).send({ message: "Loja modificada com sucesso" });
@@ -43,7 +43,7 @@ export default class StoreController{
             name: store1.name,
             store: store1.store, 
             address: store1.address, 
-            creadtedAt: store1.createdAt, 
+            createdAt: store1.createdAt, 
             updatedAt: now, 
             deletedAt: now 
         });
@@ -54,11 +54,11 @@ export default class StoreController{
     static async restore(req: Request, res: Response): Promise<void>{
         const store = await StoreService.getByIdDeleted(new Types.ObjectId(req.params.id));
 
-        await StoreService.modify(store._id, {
+        await StoreService.modify(new Types.ObjectId(store._id), {
             name: store.name,
             address: store.address,
             store: store.store,
-            creadtedAt: store.createdAt,
+            createdAt: store.createdAt,
             updatedAt: Date.now(),
             deletedAt: null
         });

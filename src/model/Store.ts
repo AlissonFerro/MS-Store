@@ -15,8 +15,7 @@ export const storeSchema = new mongoose.Schema({
         required: true
     },
     createdAt: {
-        type: Number,
-        default: Date.now()
+        type: Number
     },
     updatedAt: {
         type: Number

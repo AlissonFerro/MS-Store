@@ -1,8 +1,11 @@
+import { Types } from "mongoose";
+
 export default interface IStore{
+    _id?: Types.ObjectId;
     name: string,
     store: string,
     address: string,
-    creadtedAt: number,
-    updatedAt: number,
-    deletedAt: number | null
+    createdAt?: number,
+    updatedAt?: number,
+    deletedAt?: number | null
 }
