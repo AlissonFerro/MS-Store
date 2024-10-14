@@ -38,6 +38,14 @@ export default class StoreService{
     }
 
     static async modify(id: Types.ObjectId, payload: IStore){
-        await StoreRepositories.modify(id, payload);
+        const now = Date.now();
+        return await StoreRepositories.modify(id, {
+            name: payload.name, 
+            address: payload.address, 
+            store: payload.store, 
+            createdAt: payload.createdAt, 
+            updatedAt: now,
+            deletedAt: payload.deletedAt
+        });
     }
 }
