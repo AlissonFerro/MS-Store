@@ -21,4 +21,48 @@ export default class StoreController{
         }); 
         res.status(201).send({ store: s });
     }
+
+    static async modify(req: Request, res: Response): Promise<void>{
+        const { name, store, address } = req.body;
+
+        const store1 = await StoreService.getById(new Types.ObjectId(req.params.id)); 
+
+        await StoreService.modify(new Types.ObjectId(req.params.id), {
+            name, store, address, creadtedAt: store1.createdAt, updatedAt: Date.now(), deletedAt: null 
+        });
+
+        res.status(200).send({ message: "Loja modificada com sucesso" });
+    }
+
+    static async delete(req: Request, res: Response): Promise<void>{
+        const store1 = await StoreService.getById(new Types.ObjectId(req.params.id)); 
+        
+        const now = Date.now();
+
+        await StoreService.modify(new Types.ObjectId(req.params.id), {
+            name: store1.name,
+            store: store1.store, 
+            address: store1.address, 
+            creadtedAt: store1.createdAt, 
+            updatedAt: now, 
+            deletedAt: now 
+        });
+
+        res.status(200).send({ message: "Loja deletada com sucesso" });
+    }
+
+    static async restore(req: Request, res: Response): Promise<void>{
+        const store = await StoreService.getByIdDeleted(new Types.ObjectId(req.params.id));
+
+        await StoreService.modify(store._id, {
+            name: store.name,
+            address: store.address,
+            store: store.store,
+            creadtedAt: store.createdAt,
+            updatedAt: Date.now(),
+            deletedAt: null
+        });
+        
+        res.status(200).send({ message: "Loja restaurada com sucesso" });
+    }
 }

@@ -21,6 +21,21 @@ export default class StoreService{
     }
 
     static async getById(id: Types.ObjectId){
-        return await StoreRepositories.getById(id);
+        const store = await StoreRepositories.getById(id);
+        if(!store) 
+            throw new AppError('Loja não encontrada', 404);
+        return store
+    }
+
+    static async getByIdDeleted(id: Types.ObjectId){
+        const store = await StoreRepositories.getByIdDeleted(id);
+        if(!store)
+            throw new AppError('Loja não encontrada', 404);
+
+        return store;
+    }
+
+    static async modify(id: Types.ObjectId, payload: IStore){
+        await StoreRepositories.modify(id, payload);
     }
 }

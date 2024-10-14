@@ -6,13 +6,28 @@ const storeRouter = Router();
 
 storeRouter
     .get('/',  
-        StoreController.getAll)
+        StoreController.getAll
+    )
 
     .get('/:id',  
-        StoreController.getById)
+        StoreController.getById
+    )
 
     .post('/', 
         StoreMiddleware.validateBody,
-        StoreController.create)    
+        StoreController.create
+    )
+    
+    .post('/:id',
+        StoreController.restore
+    )
+    .put('/:id', 
+        StoreMiddleware.validateBody,
+        StoreController.modify
+    )
+
+    .delete('/:id', 
+        StoreController.delete
+    )
 
 export default storeRouter;
