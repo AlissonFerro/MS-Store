@@ -23,6 +23,6 @@ export default class StoreRepositories{
     }
 
     static async modify(id: Types.ObjectId, payload: IStore){
-        return await StoreModel.findByIdAndUpdate(id, payload);
+        return await StoreModel.findOneAndUpdate({ _id: id }, payload);
     }
 }

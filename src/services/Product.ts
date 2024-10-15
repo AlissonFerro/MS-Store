@@ -27,15 +27,21 @@ export default class ProductService{
     }
 
     static async deleteStore(payload: IStore){
-        const now = Date.now();
-
-        await StoreRepositories.modify(new Types.ObjectId(payload._id), {
+        return await StoreRepositories.modify(new Types.ObjectId(payload._id), {
             address: payload.address,
             name: payload.name,
             store: payload.store,
             createdAt: payload.createdAt,
-            updatedAt: now,
-            deletedAt: now 
-        })
+            updatedAt: payload.updatedAt,
+            deletedAt: payload.deletedAt 
+        });
+    }
+
+    static async deleteProduct(payload: IProduct){
+        return await ProductRepositorie.modify(payload)
+    }
+
+    static async getByStore(name: string): Promise<IProduct[]>{
+        return await ProductRepositorie.getByStore(name) as IProduct[];
     }
 }

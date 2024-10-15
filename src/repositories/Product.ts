@@ -19,4 +19,12 @@ export default class ProductRepositorie{
     static async deleteStore(id: Types.ObjectId, payload: IProduct){
         return await ProductModel.findByIdAndUpdate(id, payload);
     }
+
+    static async getByStore(name: string): Promise<IProduct[]>{
+        return await ProductModel.find({ 'market.name': name });
+    }
+
+    static async modify(payload: IProduct): Promise<IProduct>{
+        return await ProductModel.findByIdAndUpdate(payload._id, payload) as IProduct;
+    }
 }

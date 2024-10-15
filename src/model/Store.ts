@@ -25,4 +25,16 @@ export const storeSchema = new mongoose.Schema({
     }
 });
 
+storeSchema.pre('findOneAndUpdate', async function(next){
+    const update = this.getUpdate();
+    const storeId = this.getFilter()._id;
+    if(update)
+        await mongoose.model('Product').updateMany(
+            { "market._id": storeId }, 
+            { $set: update } 
+        );
+
+    next();
+})
+
 export const StoreModel = mongoose.model('Store', storeSchema);

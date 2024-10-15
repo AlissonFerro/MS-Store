@@ -7,7 +7,7 @@ export default interface IProduct{
     price: number,
     stock: number,
     market: IStore,
-    createdAt?: number,
-    updatedAt: number,
-    deletedAt: number | null
+    createdAt: number,
+    updatedAt?: number,
+    deletedAt?: number | null
 }

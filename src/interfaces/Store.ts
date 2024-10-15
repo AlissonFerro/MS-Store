@@ -5,7 +5,7 @@ export default interface IStore{
     name: string,
     store: string,
     address: string,
-    createdAt?: number,
+    createdAt: number,
     updatedAt?: number,
     deletedAt?: number | null
 }
