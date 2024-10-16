@@ -18,12 +18,13 @@ export default class ProductService{
         return products; 
     }
 
-    static async getById(id: Types.ObjectId){
+    static async getById(id: Types.ObjectId): Promise<IProduct>{
         const product = await ProductRepositorie.getById(id);
-        if(!product)
-            throw new AppError('Nenhum registro encontrado', 404);
 
-        return product;
+        if(!product)
+            throw new AppError('Nenhum produto encontrado', 404);
+
+        return product as IProduct;
     }
 
     static async deleteStore(payload: IStore){

@@ -6,6 +6,6 @@ export default interface IStore{
     store: string,
     address: string,
     createdAt: number,
-    updatedAt?: number,
+    updatedAt: number,
     deletedAt?: number | null
 }

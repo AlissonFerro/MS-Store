@@ -7,7 +7,7 @@ export default class ProductController{
     static async create(req: Request, res: Response): Promise<void>{
         const { name, price, storeId, stock } = req.body;
 
-        const store = await StoreService.getById(storeId)
+        const store = await StoreService.getById(storeId)        
         const now = Date.now();
 
         const product = await ProductService.create({

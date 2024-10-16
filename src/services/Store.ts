@@ -38,13 +38,12 @@ export default class StoreService{
     }
 
     static async modify(id: Types.ObjectId, payload: IStore): Promise<IStore>{
-        const now = Date.now();
         return await StoreRepositories.modify(id, {
             name: payload.name, 
             address: payload.address, 
             store: payload.store, 
             createdAt: payload.createdAt, 
-            updatedAt: now,
+            updatedAt: payload.updatedAt,
             deletedAt: payload.deletedAt
         }) as IStore;
     }

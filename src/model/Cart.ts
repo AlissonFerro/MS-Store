@@ -1,10 +1,18 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { productSchema } from "./Product";
 
 export const cartSchema = new mongoose.Schema({
     products: {
-        type: Array<typeof productSchema>,
+        type: [productSchema],
         required: true
+    },
+    userId: {
+        type: Types.ObjectId,
+        required: true
+    },
+    priceTot: {
+        type: Number,
+        default: 0.00
     },
     createdAt: {
         type: Number,

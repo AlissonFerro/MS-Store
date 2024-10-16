@@ -1,7 +1,6 @@
 import { Response, Request } from "express";
 import StoreService from "../services/Store";
 import { Types } from "mongoose";
-import ProductService from "../services/Product";
 import IStore from "../interfaces/Store";
 
 export default class StoreController{

@@ -8,6 +8,6 @@ export default interface IProduct{
     stock: number,
     market: IStore,
     createdAt: number,
-    updatedAt?: number,
+    updatedAt: number,
     deletedAt?: number | null
 }

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import AppError from "../Error";
 
 export const storeSchema = new mongoose.Schema({
     name: {
@@ -28,11 +29,14 @@ export const storeSchema = new mongoose.Schema({
 storeSchema.pre('findOneAndUpdate', async function(next){
     const update = this.getUpdate();
     const storeId = this.getFilter()._id;
-    if(update)
-        await mongoose.model('Product').updateMany(
-            { "market._id": storeId }, 
-            { $set: update } 
-        );
+    
+    if(!update)
+        throw new AppError('Erro ao atualizar produtos', 500);
+
+    await mongoose.model('Product').updateMany(
+        { "market._id": storeId }, 
+        { $set: { market: update } } 
+    );
 
     next();
 })
