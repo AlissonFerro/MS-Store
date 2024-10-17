@@ -7,7 +7,8 @@ import ICart from "../interfaces/Cart";
 
 export default class CartRepositories{
     static async finishPurcharse(cartId: Types.ObjectId): Promise<void> {
-        const cart = await CartModel.findById(cartId) as ICart;
+        const cart = await CartModel.findOne({ _id: cartId, deletedAt: null}) as ICart;
+
         if(!cart)
             throw new AppError('Nenhum Carrinho encontrado', 404);
 
@@ -25,6 +26,17 @@ export default class CartRepositories{
                 price: product.price,
                 stock: product.stock-1
             })    
+        })
+
+        const now = Date.now();
+
+        await CartModel.findByIdAndUpdate(cartId, {
+            products: products,
+            priceTot: cart.priceTot,
+            userId: cart.userId,
+            createdAt: cart.createdAt,
+            updatedAt: now,
+            deletedAt: now
         })
     }
 
