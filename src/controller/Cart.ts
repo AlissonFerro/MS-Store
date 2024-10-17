@@ -15,15 +15,16 @@ export default class CartController{
         const { productId } = req.body;
 
         const product = await ProductService.getById(new Types.ObjectId(productId));
+
         if (!product.market.createdAt) 
             throw new AppError("createdAt is required", 400);
+
         if (!product.market.updatedAt) 
             throw new AppError("updatedAt is required", 400);
         
         await CartService.addToCart(product, new Types.ObjectId(id));
 
-        res.status(200).send({ message: 'Produto adicionado com sucesso' })
-        
+        res.status(200).send({ message: 'Produto adicionado com sucesso' })        
     }
 
     static async createCart(req: Request, res: Response): Promise<void>{
@@ -42,5 +43,12 @@ export default class CartController{
         await CartService.removeToCart(product, new Types.ObjectId(id));
 
         res.status(200).send({ message: "Produto removido com sucesso" });
+    }
+
+    static async finishPurcharse(req: Request, res: Response): Promise<void>{
+        const { id } = req.params;
+
+        await CartService.finishPurcharse(new Types.ObjectId(id));
+        res.status(200).send({ message: "Compra efetuada com sucesso" });
     }
 }

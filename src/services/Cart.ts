@@ -10,8 +10,10 @@ export default class CartService{
 
     static async getById(cartId: Types.ObjectId){
         const cart = await CartRepositories.getById(cartId);
+        
         if(!cart)
             throw new AppError('Nenhum carrinho encontrado', 404);
+
         return cart;
     }
 
@@ -25,5 +27,9 @@ export default class CartService{
 
     static async removeToCart(product: IProduct, cartId: Types.ObjectId){
         return await CartRepositories.removeToCart(product, cartId)
+    }
+
+    static async finishPurcharse(cartId: Types.ObjectId){
+        await CartRepositories.finishPurcharse(cartId);
     }
 }

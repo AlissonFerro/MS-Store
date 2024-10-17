@@ -2,8 +2,32 @@ import { Types } from "mongoose";
 import { CartModel } from "../model/Cart";
 import IProduct from "../interfaces/Product";
 import AppError from "../Error";
+import { ProductModel } from "../model/Product";
+import ICart from "../interfaces/Cart";
 
 export default class CartRepositories{
+    static async finishPurcharse(cartId: Types.ObjectId): Promise<void> {
+        const cart = await CartModel.findById(cartId) as ICart;
+        if(!cart)
+            throw new AppError('Nenhum Carrinho encontrado', 404);
+
+        const { products } = cart;
+
+        if(products.length<1)
+            throw new AppError('Nenhum item no carrinho', 422);
+
+        products.map(async product => {
+            await ProductModel.findByIdAndUpdate(product._id, {
+                name: product.name,
+                createdAt: product.createdAt,
+                updatedAt: Date.now(),
+                deletedAt: null,
+                price: product.price,
+                stock: product.stock-1
+            })    
+        })
+    }
+
     static async create(userId: Types.ObjectId){
         const now = Date.now(); 
         return await CartModel.create({
