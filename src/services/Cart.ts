@@ -22,4 +22,8 @@ export default class CartService{
     static async getAll(){
         return await CartRepositories.getAll()
     }
+
+    static async removeToCart(product: IProduct, cartId: Types.ObjectId){
+        return await CartRepositories.removeToCart(product, cartId)
+    }
 }

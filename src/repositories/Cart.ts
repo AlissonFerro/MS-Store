@@ -36,4 +36,32 @@ export default class CartRepositories{
     static async getAll(){
         return CartModel.find({ deletedAt: null });
     }
+
+    static async removeToCart(product: IProduct, cartId: Types.ObjectId){
+        const cart = await CartModel.findById(cartId);
+        
+        if(!cart)
+            throw new AppError('Nenhum carrinho encontrado', 404);
+        const { products } = cart;
+
+        const findIndex = products.findIndex(
+            p => p._id.toString() === product._id?.toString()
+        );
+        
+        if(findIndex<0)
+            throw new AppError('Produto não está no carrinho', 422);
+
+        const productsFiltered = products.filter(
+            p => p._id.toString() !== product._id?.toString()
+        );
+        
+        return await CartModel.findOneAndUpdate({ _id: cartId }, {
+            userId: cart.userId,
+            products: productsFiltered,
+            createdAt: cart.createdAt,
+            priceTot: cart.priceTot-product.price,
+            updatedAt: Date.now(),
+            deletedAt: null
+        })
+    }
 }

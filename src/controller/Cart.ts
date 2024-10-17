@@ -32,4 +32,15 @@ export default class CartController{
         const cart = await CartService.create(new Types.ObjectId(userId));
         res.status(201).send({ message: "Carrinho criado com sucesso", cart });
     }
+
+    static async removeToCart(req: Request, res: Response): Promise<void>{
+        const { id } = req.params;
+        const { productId } = req.body;
+
+        const product = await ProductService.getById(new Types.ObjectId(productId));
+
+        await CartService.removeToCart(product, new Types.ObjectId(id));
+
+        res.status(200).send({ message: "Produto removido com sucesso" });
+    }
 }
