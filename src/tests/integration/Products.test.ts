@@ -2,6 +2,7 @@ import app from "../..";
 import { ProductModel } from "../../model/Product";
 import server from '../../index';
 import { StoreModel } from "../../model/Store";
+import mongoose from "mongoose";
 const request = require('supertest');
 
 jest.mock('../../model/Product', () => ({
@@ -22,7 +23,7 @@ const mockedFind = ProductModel.find as jest.Mock;
 const mockedFindOne = ProductModel.findOne as jest.Mock;
 const StoreFindOne = StoreModel.findOne as jest.Mock;
 
-describe('GET /api/products', () => {
+describe('GET /api/product', () => {
 
     beforeEach(() => {
         mockedFind.mockClear();
@@ -193,9 +194,7 @@ describe('GET /api/products', () => {
                 "createdAt": 1728906350962,
                 "updatedAt": 1729107589024,
                 "deletedAt": null,
-                "_id": {
-                    "$oid": "671016857946ba9da5a21014"
-                }
+                "_id": new mongoose.Types.ObjectId()
             })
             const res = await request(app).post('/api/product').send({
                 name: "Perfume",
@@ -206,6 +205,6 @@ describe('GET /api/products', () => {
             expect(res.status).toBe(201);
             expect(res.body.message).toMatch(/Produto/);
             expect(res.body.message).toMatch(/criado/);
-        })
+        });
     })
 })
