@@ -22,4 +22,6 @@ app
 
 const PORT = process.env.PORT || 4002;
 
-app.listen(PORT, () => console.log(`Serviço Cart rodando na porta: ${PORT}`));
+const server = app.listen(PORT, () => console.log(`Serviço Cart rodando na porta: ${PORT}`));
+
+export default server;

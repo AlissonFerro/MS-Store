@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --testEnvironment=node --watchAll --verbose --coverage",
     "dev": "nodemon src/index.ts"
+  },
+  "jest": {
+    "resetMocks": false
   },
   "keywords": [],
   "author": "",
@@ -13,7 +16,14 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.13",
+    "@types/mongoose": "^5.11.96",
     "@types/node": "^22.7.5",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
+    "mongoose": "^8.7.2",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   },
@@ -21,7 +31,6 @@
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "express-async-errors": "^3.1.1",
-    "mongoose": "^8.7.1",
     "nodemon": "^3.1.7"
   }
 }
